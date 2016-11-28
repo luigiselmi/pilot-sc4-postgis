@@ -7,8 +7,9 @@ CREATE OR REPLACE FUNCTION fn_mapmatch(IN tempdataname character varying, IN tem
 $BODY$
 BEGIN
 
-IF (((select tempdataname LIKE 'temp_gps_data_%')=false) OR ((select tempprocname LIKE 'temp_gps_proc_%')=false)) THEN
-	RAISE NOTICE '%', 'Table name prefix is hardcoded and should not be changed. Cannot continue.';
+IF ((((select tempdataname LIKE 'temp_gps_data_%')=false) OR ((select tempprocname LIKE 'temp_gps_proc_%')=false)) AND 
+	((select tempdataname LIKE 'data_temp_%')=false) OR ((select tempprocname LIKE 'proc_temp_%')=false)) THEN
+	RAISE NOTICE '%', 'Table names prefixes are hardcoded for security reasons. Cannot continue.';
 	return;
 END IF;
 

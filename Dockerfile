@@ -14,16 +14,23 @@ RUN apt-get update \
     && apt-get install -y postgresql-contrib-9.4 \
     && apt-get install -y postgresql-9.4-postgis-scripts 
 
+# Install R
+RUN apt-get update \
+    && apt-get install -y r-base r-base-dev
+
 # Create the thessaloniki database and enable the postgis extensions
 ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh 
 
-# Copy the OSM data with the thessaloniki road network
-ADD osm_roads_greece.sql.gz .
-RUN gunzip osm_roads_greece.sql.gz 
+# Copy the OSM data (dump) with the thessaloniki road network
+ADD bde_pilot_thessaloniki_dump.gz .
+RUN gunzip bde_pilot_thessaloniki_dump.gz 
 
-# Copy the SQL script for the map-match
+# Copy the SQL scripts for the map-match
 ADD CREATE_fn_mapmatch.sql .
+ADD CREATE_ways_spatial.sql .
 
-# Import the data
+# Import the data 
 ADD import-road-network-data.sh .
-RUN ["sh", "import-road-network-data.sh"]
+#CMD ["sh", "import-road-network-data.sh"]
+
+
