@@ -18,6 +18,9 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y r-base r-base-dev
 
+# Copy the R script for the map matching
+ADD mapmatchfunctions_v2.R .
+
 # Create the thessaloniki database and enable the postgis extensions
 ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh 
 
