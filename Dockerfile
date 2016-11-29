@@ -9,6 +9,10 @@ FROM postgres:9.4
 
 MAINTAINER Luigi Selmi <luigiselmi@gmail.com>
 
+# Install vi for editing
+RUN apt-get update && \
+    apt-get install -y vim
+
 # Install the PostGis extension
 RUN apt-get update \
     && apt-get install -y postgresql-contrib-9.4 \
@@ -16,12 +20,23 @@ RUN apt-get update \
 
 # Install R
 RUN apt-get update \
-    && apt-get install -y r-base r-base-dev
+    && apt-get install -y r-base r-base-dev \
+    && apt-get install -y libpq-dev
 
-# Copy the R script for the map matching
+# Copy R packages to connect to PostgreSQL
+ADD https://cran.r-project.org/src/contrib/RPostgreSQL_0.4-1.tar.gz .
+ADD https://cran.r-project.org/src/contrib/DBI_0.5-1.tar.gz .
+RUN ["R","CMD","INSTALL","DBI_0.5-1.tar.gz"]
+RUN ["R","CMD","INSTALL","RPostgreSQL_0.4-1.tar.gz"]
+
+# Copy the R scripts for the map matching and for the initialization
 ADD mapmatchfunctions_v2.R .
+ADD init.R .
 
-# Create the thessaloniki database and enable the postgis extensions
+# Copy a file with some data to test the  installation
+ADD taxi-gps-sample.csv .
+
+# Create the thessaloniki database, enable the postgis extensions, import the OSM data
 ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh 
 
 # Copy the OSM data (dump) with the thessaloniki road network
@@ -33,7 +48,7 @@ ADD CREATE_fn_mapmatch.sql .
 ADD CREATE_ways_spatial.sql .
 
 # Import the data 
-ADD import-road-network-data.sh .
+#ADD import-road-network-data.sh .
 #CMD ["sh", "import-road-network-data.sh"]
 
 
