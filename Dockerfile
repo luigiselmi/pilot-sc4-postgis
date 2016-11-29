@@ -36,6 +36,10 @@ ADD init.R .
 # Copy a file with some data to test the  installation
 ADD taxi-gps-sample.csv .
 
+# Copy the SQL scripts for the map-match
+ADD CREATE_fn_mapmatch.sql .
+ADD CREATE_ways_spatial.sql .
+
 # Create the thessaloniki database, enable the postgis extensions, import the OSM data
 ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh 
 
@@ -43,12 +47,5 @@ ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh
 ADD bde_pilot_thessaloniki_dump.gz .
 RUN gunzip bde_pilot_thessaloniki_dump.gz 
 
-# Copy the SQL scripts for the map-match
-ADD CREATE_fn_mapmatch.sql .
-ADD CREATE_ways_spatial.sql .
-
-# Import the data 
-#ADD import-road-network-data.sh .
-#CMD ["sh", "import-road-network-data.sh"]
 
 
