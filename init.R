@@ -10,3 +10,4 @@ source("mapmatchfunctions_v2.R")
 loadPackages();
 gdata <- read.table("taxi-gps-sample.csv",header=TRUE,sep="\t")
 test_matches <- match(gdata,'localhost',5432,"thessaloniki","postgres","$POSTGRES_PASSWORD")
+print(test_matches)
