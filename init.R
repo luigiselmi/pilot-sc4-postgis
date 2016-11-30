@@ -2,7 +2,7 @@
 # Test the connection to the database
 require("RPostgreSQL")
 driver <- dbDriver("PostgreSQL")
-connection <- dbConnect(driver,dbname="thessaloniki",host="localhost",port=5432,user="postgres",password="password")
+connection <- dbConnect(driver,dbname="thessaloniki",host="localhost",port=5432,user="postgres",password="$POSTGRES_PASSWORD")
 dbExistsTable(connection,"ways_spatial")
 
 # Test the map matching function
