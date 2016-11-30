@@ -8,5 +8,5 @@ dbExistsTable(connection,"ways_spatial")
 # Test the map matching function
 source("mapmatchfunctions_v2.R")
 loadPackages();
-gdata <- read.table("taxi-gps-sample.csv",header=TRUE)
+gdata <- read.table("taxi-gps-sample.csv",header=TRUE,sep="\t")
 test_matches <- match(gdata,'localhost',5432,"thessaloniki","postgres","password")
