@@ -18,7 +18,7 @@ A docker image can be built with the command
 ##Install and run
 Start a docker container with PostGis setting the password of the POSTGRES_USER=postgres (e.g. "password")
 
-    $ docker run --name postgis -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.0.1
+    $ docker run --name postgis -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
 ##Usage
 You can connect to the PostGis container starting a new docker container with PostgreSQL running the psql client
