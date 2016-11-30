@@ -31,7 +31,7 @@ You can also use the exec command with Docker to run a test script for the map m
 
 From the container run the script
 
-    # Rscript init.R
+    # Rscript test_mapmatch.R
 
 The script matches some records of taxies and returns the OSM identifiers of the matched 
 road segments and the distance between the vehicle and the road segment.

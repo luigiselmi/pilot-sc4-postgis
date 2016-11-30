@@ -29,12 +29,12 @@ ADD https://cran.r-project.org/src/contrib/DBI_0.5-1.tar.gz .
 RUN ["R","CMD","INSTALL","DBI_0.5-1.tar.gz"]
 RUN ["R","CMD","INSTALL","RPostgreSQL_0.4-1.tar.gz"]
 
-# Copy the R scripts for the map matching and for the initialization
+# Copy the R scripts for the map matching 
 ADD mapmatchfunctions_v2.R .
-ADD init.R .
 
-# Copy a file with some data to test the  installation
+# Copy a script and a data file to test the  installation
 ADD taxi-gps-sample.csv .
+ADD test_mapmatch.R .
 
 # Copy the SQL scripts for the map-match
 ADD CREATE_fn_mapmatch.sql .
