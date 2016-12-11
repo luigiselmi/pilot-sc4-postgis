@@ -1,9 +1,9 @@
 # The image created with this Dockerfile starts an instance of postgis with the road network of 
 # Thessaloniki and a function to extract the map matched candidates from a set of GPS records
 # 1) In order to build an image using this docker file, run the following docker command
-# $  docker build -t bde2020/pilot-sc4-postgis:v0.0.1 .
+# $  docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
 # 2) Run a container using the command
-# $ docker run --name postgis -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.0.1
+# $ docker run --name postgis -p 6311:6311 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
 FROM postgres:9.4
 
@@ -47,5 +47,10 @@ ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh
 ADD bde_pilot_thessaloniki_dump.gz .
 RUN gunzip bde_pilot_thessaloniki_dump.gz 
 
-
+# Add Rserve for the communication Java - R
+ADD start_rserve.sh .
+ADD Rserve.conf .
+ADD rserve/ rserve/
+# Install the Rserve package for R
+RUN ["R", "CMD", "INSTALL", "rserve/Rserve_1.8-5.tar.gz"]
 
