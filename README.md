@@ -4,7 +4,8 @@ The Dockerfile builds a Docker image with PostGis and R. It contains also the R 
 map matching. The map matching algorithm is used to match the location of a vehicle given as a (longitude, latitude) pair
  to a street. The road network data, extracted from OpenStreetMap, is also added to the image. The area covered is the 
 city of Thessaloniki. The map matching is based on some SQL scripts and on a R script. The scripts are provided by 
-[CERTH-HIT](http://www.imet.gr/).
+[CERTH-HIT](http://www.imet.gr/). This image contains Rserve that allows the use of R scripts from Java through a TCP/IP connection.
+ 
 
 ##Requirements
 
@@ -35,6 +36,21 @@ From the container run the script
 
 The script matches some records of taxies and returns the OSM identifiers of the matched 
 road segments and the distance between the vehicle and the road segment.
+
+## Rserve
+Rserve allows the use of R scripts and functions from Java through a TCP/IP connection. The server can be configured
+setting some parameters in the Rserve.conf file. The parameters set are a source R file with the functions that will be
+called from Java, the port and the remote connection enabled. In order to start the Rserve run the following command 
+
+    $ docker exec -d rserve ./start_rserve.sh
+
+
+## Troubleshooting installing Rserve
+In case the build of the docker image fails because of the Rserve installation you can try to install it manually from
+within the container running the same command as in the Dockerfile 
+
+    # R CMD INSTALL rserve/Rserve_1.8-5.tar.gz
  
+The installation can terminate with a error message but it should work all the same.
 ##License
-TBD
+Apache 2.0

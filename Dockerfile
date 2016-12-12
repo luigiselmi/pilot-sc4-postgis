@@ -53,4 +53,3 @@ ADD Rserve.conf .
 ADD rserve/ rserve/
 # Install the Rserve package for R
 RUN ["R", "CMD", "INSTALL", "rserve/Rserve_1.8-5.tar.gz"]
-
