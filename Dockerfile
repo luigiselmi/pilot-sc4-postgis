@@ -24,8 +24,8 @@ RUN apt-get update \
     && apt-get install -y libpq-dev
 
 # Copy R packages to connect to PostgreSQL
-ADD https://cran.r-project.org/src/contrib/RPostgreSQL_0.4-1.tar.gz .
-ADD https://cran.r-project.org/src/contrib/DBI_0.5-1.tar.gz .
+ADD https://cran.r-project.org/src/contrib/Archive/RPostgreSQL/RPostgreSQL_0.4-1.tar.gz .
+ADD https://cran.r-project.org/src/contrib/Archive/DBI/DBI_0.5-1.tar.gz .
 RUN ["R","CMD","INSTALL","DBI_0.5-1.tar.gz"]
 RUN ["R","CMD","INSTALL","RPostgreSQL_0.4-1.tar.gz"]
 
