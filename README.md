@@ -7,21 +7,21 @@ city of Thessaloniki. The map matching is based on some SQL scripts and on a R s
 [CERTH-HIT](http://www.imet.gr/). This image contains Rserve that allows the use of R scripts from Java through a TCP/IP connection.
  
 
-##Requirements
+## Requirements
 
 This component requires a Docker engine installed in the host where it is run.
 
-##Build
+## Build
 A docker image can be built with the command
 
     $ docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
 
-##Install and run
+## Install and run
 Start a docker container with PostGis setting the password of the POSTGRES_USER=postgres (e.g. "password")
 
     $ docker run --name postgis -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
-##Usage
+## Usage
 You can connect to the PostGis container starting a new docker container with PostgreSQL running the psql client
 
     $ docker run -it --rm --link postgis:psql postgres:9.4 psql -h postgis -U postgres
@@ -52,5 +52,6 @@ within the container running the same command as in the Dockerfile
     # R CMD INSTALL rserve/Rserve_1.8-5.tar.gz
  
 The installation can terminate with a error message but it should work all the same.
-##License
+
+## License
 Apache 2.0
