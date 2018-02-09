@@ -17,7 +17,7 @@ A docker image can be built with the command
     $ docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
 
 ## Install and run
-Start a docker container with PostGis setting the password of the POSTGRES_USER=postgres (e.g. "password")
+Start a docker container with PostGis, name it e.g. "map-match", setting the password of the POSTGRES_USER=postgres (e.g. "password")
 
     $ docker run --name postgis -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
@@ -42,7 +42,7 @@ Rserve allows the use of R scripts and functions from Java through a TCP/IP conn
 setting some parameters in the Rserve.conf file. The parameters set are a source R file with the functions that will be
 called from Java, the port and the remote connection enabled. In order to start the Rserve run the following command 
 
-    $ docker exec -d rserve ./start_rserve.sh
+    $ docker exec -d map-match ./start_rserve.sh
 
 
 ## Troubleshooting installing Rserve
