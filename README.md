@@ -24,7 +24,7 @@ Start a docker container with PostGis, name it e.g. "map-match", setting the pas
 ## Usage
 You can connect to the PostGis container starting a new docker container with PostgreSQL running the psql client
 
-    $ docker run -it --rm --link postgis:psql postgres:9.4 psql -h map-match -U postgres
+    $ docker run -it --rm --link map-match:psql postgres:9.4 psql -h map-match -U postgres
 
 You can also use the exec command with Docker to run a test script for the map matching
 
