@@ -19,7 +19,9 @@ A docker image can be built with the command
 ## Install and run
 Start a docker container with PostGis, name it e.g. "map-match", setting the password of the POSTGRES_USER=postgres (e.g. "password")
 
-    $ docker run --name map-match -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
+    $ docker run --name map-match -p 6311:6311 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
+
+The port is used by  Rserve
 
 ## Usage
 You can connect to the PostGis container starting a new docker container with PostgreSQL running the psql client
