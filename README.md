@@ -1,4 +1,4 @@
-Pilot SC4 PostGis with OSM data
+Pilot SC4 Map-Matching
 =====================
 The Dockerfile builds a Docker image with PostGis and R. It contains also the R scripts with the definition of the functions for the 
 map matching. The map matching algorithm is used to match the location of a vehicle given as a (longitude, latitude) pair
