@@ -21,7 +21,7 @@ RUN apt-get update \
 # Install R
 RUN apt-get update \
     && apt-get install -y r-base r-base-dev \
-    && apt-get install -y libpq-dev
+    && apt-get install -y libpq-dev libssl-dev
 
 # Copy R packages to connect to PostgreSQL
 ADD https://cran.r-project.org/src/contrib/Archive/RPostgreSQL/RPostgreSQL_0.4-1.tar.gz .
@@ -53,3 +53,6 @@ ADD Rserve.conf .
 ADD rserve/ rserve/
 # Install the Rserve package for R
 RUN ["R", "CMD", "INSTALL", "rserve/Rserve_1.8-5.tar.gz"]
+#RUN Rscript -e "install.packages('Rserve')"
+# Start Rserve
+#RUN ["sh","start_rserve.sh"]
