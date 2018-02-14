@@ -55,4 +55,4 @@ ADD rserve/ rserve/
 RUN ["R", "CMD", "INSTALL", "rserve/Rserve_1.8-5.tar.gz"]
 #RUN Rscript -e "install.packages('Rserve')"
 # Start Rserve
-#RUN ["sh","start_rserve.sh"]
+CMD ["sh","start_rserve.sh"]
