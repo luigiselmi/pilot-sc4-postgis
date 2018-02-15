@@ -24,7 +24,7 @@ Start a docker container with PostGis, name it e.g. "map-match", setting the pas
 The port is used by  Rserve
 
 ## Usage
-You can connect to the PostGis container starting a new docker container with PostgreSQL running the psql client
+You can connect to the PostGis RDBMS in the container starting a new docker container with PostgreSQL running the psql client.
 
     $ docker run -it --rm --link map-match:psql postgres:9.4 psql -h map-match -U postgres
 
