@@ -36,7 +36,7 @@ From the container run the script
 
     # Rscript test_mapmatch.R
 
-The script matches some records of taxies and returns the OSM identifiers of the matched 
+The script matches some records of taxis and returns the OSM identifiers of the matched 
 road segments and the distance between the vehicle and the road segment.
 
 ## Rserve
