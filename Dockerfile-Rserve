@@ -1,22 +1,23 @@
 # The image created with this Dockerfile starts an instance of postgis with the road network of 
 # Thessaloniki and a function to extract the map matched candidates from a set of GPS records
 # 1) In order to build an image using this docker file, run the following docker command
-# $  docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
+# $  docker build -f Dockerfile-Rserve -t bde2020/pilot-sc4-rserve:v0.1.0 .
 # 2) Run a container using the command
-# $ docker run --name map-match -p 6311:6311 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
+# $ docker run --name map-match --network pilot-sc4-net -p 6311:6311 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-rserve:v0.1.0
 
-FROM postgres:9.4
+FROM ubuntu
 
 MAINTAINER Luigi Selmi <luigiselmi@gmail.com>
 
+# Install  network tools (ifconfig, netstat, ping, ip)
+RUN apt-get update && \
+    apt-get install -y net-tools && \
+    apt-get install -y iputils-ping && \
+    apt-get install -y iproute2
+
 # Install vi for editing
 RUN apt-get update && \
-    apt-get install -y vim
-
-# Install the PostGis extension
-RUN apt-get update \
-    && apt-get install -y postgresql-contrib-9.4 \
-    && apt-get install -y postgresql-9.4-postgis-scripts 
+    apt-get install -y vim 
 
 # Install R
 RUN apt-get update \
@@ -34,25 +35,15 @@ ADD mapmatchfunctions_v2.R .
 
 # Copy a script and a data file to test the  installation
 ADD taxi-gps-sample.csv .
-ADD test_mapmatch.R .
-
-# Copy the SQL scripts for the map-match
-ADD CREATE_fn_mapmatch.sql .
-ADD CREATE_ways_spatial.sql .
-
-# Copy the OSM data (dump) with the thessaloniki road network
-ADD bde_pilot_thessaloniki_dump.gz .
-RUN gunzip bde_pilot_thessaloniki_dump.gz 
+ADD test_mapmatch.R . 
 
 # Add Rserve for the communication Java - R
+ADD start_rserve.sh .
 ADD Rserve.conf .
 ADD rserve/ rserve/
 
 # Install the Rserve package for R
 RUN ["R", "CMD", "INSTALL", "rserve/Rserve_1.8-5.tar.gz"]
-
-# Create the thessaloniki database, enable the postgis extensions, import the OSM data
-ADD init-thessaloniki-db.sh docker-entrypoint-initdb.d/init-thessaloniki-db.sh
-# Start Rserve. The script is started by the postgres:9.4 container adding it to the 
-# docker-entrypoint-initdb.d folder  
-ADD start_rserve.sh docker-entrypoint-initdb.d/start_rserve.sh
+  
+# Start Rserve
+CMD ["sh","start_rserve.sh"]

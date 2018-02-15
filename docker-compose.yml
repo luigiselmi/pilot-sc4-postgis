@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+    map-match-service:
+      image: bde2020/pilot-sc4-postgis:v0.1.0       
+      container_name: map-match
+      restart: unless-stopped
+      ports:
+        - "6311:6311"
+      networks:
+        - pilot-sc4-net
+ 
+networks:
+    pilot-sc4-net:
+        external: true
