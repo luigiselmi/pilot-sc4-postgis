@@ -45,5 +45,5 @@ ADD package/ package/
 # Install the Rserve package for R
 RUN ["R", "CMD", "INSTALL", "package/Rserve_1.8-5.tar.gz"]
   
-# Start Rserve
+# Start Rserve (no daemon)
 CMD ["sh","start_rserve.sh"]
