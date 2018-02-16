@@ -9,32 +9,21 @@ the city of Thessaloniki. The R and SQL scripts are provided by [CERTH-HIT](http
  
 
 ## Requirements
+Docker engine is required to build the images and run the containers. A docker network, e.g. "pilot-sc4-net", must be created to allow the 
+communication between the containers using their names
 
-This component requires Docker engine.
+    $ docker network create pilot-sc4-net
 
 ## PostGis
 A docker image with Postgres and PostGis can be built with the command
 
     $ docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
 
-### Install and run
-Start a docker container with PostGis, name it e.g. "postgres", setting the password of the POSTGRES_USER=postgres (e.g. "password")
+### Install and run PostGis
+Start a docker container with PostGis, name it e.g. "postgres", setting the password of the POSTGRES_USER=postgres 
+(e.g. "password")
 
-    $ docker run --name postgres --network pilot-sc4-net -p 5432:5432 -d bde2020/pilot-sc4-postgis:v0.1.0
-
-### Usage
-
-
-You can also use the exec command with Docker to run a test script for the map matching
-
-    $ docker exec -it map-match bash
-
-From the container run the script
-
-    # Rscript test_mapmatch.R
-
-The script matches some records of taxis and returns the OSM identifiers of the matched 
-road segments and the distance between the vehicle and the road segment.
+    $ docker run --name postgres --network pilot-sc4-net -p 5432:5432 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
 ## Rserve
 Rserve allows the use of R scripts and functions from Java through a TCP/IP connection. The server can be configured
@@ -44,14 +33,23 @@ scripts for the map-matching execute the command
 
     $ docker run --name map-match --network pilot-sc4-net -p 6311:6311 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-rserve:v0.1.0
 
+## Usage
+Both services can be started using docker-compose
 
-## Troubleshooting installing Rserve
-In case the build of the docker image fails because of the Rserve installation you can try to install it manually from
-within the container running the same command as in the Dockerfile 
+    $ docker-compose up -d
 
-    # R CMD INSTALL rserve/Rserve_1.8-5.tar.gz
- 
-The installation can terminate with a error message but it should work all the same.
+## Test the Rserve and PostGis docker containers
+You can open a shell in the Rserve container with the command
+
+    $ docker exec -it map-match bash
+
+From the Rserve container run the script
+
+    # Rscript test_mapmatch.R
+
+The script communicates with the PostGis container to map-match records of taxis with road segments and returns the OSM identifiers 
+of the matched road segments and the distance between the vehicle and the road segment.
+
 
 ## License
 Apache 2.0

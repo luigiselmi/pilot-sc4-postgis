@@ -3,7 +3,7 @@
 # 1) In order to build an image using this docker file, run the following docker command
 # $  docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
 # 2) Run a container using the command
-# $ docker run --name postgres --network pilot-sc4-net -p 5432:5432 -d bde2020/pilot-sc4-postgis:v0.1.0
+# $ docker run --name postgres --network pilot-sc4-net -p 5432:5432 -e POSTGRES_PASSWORD=password -d bde2020/pilot-sc4-postgis:v0.1.0
 
 FROM postgres:9.4
 
