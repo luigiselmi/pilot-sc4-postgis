@@ -18,11 +18,6 @@ RUN apt-get update \
     && apt-get install -y postgresql-contrib-9.4 \
     && apt-get install -y postgresql-9.4-postgis-scripts 
 
-# Install R
-RUN apt-get update \
-    && apt-get install -y r-base r-base-dev \
-    && apt-get install -y libpq-dev libssl-dev
-
 # Copy the SQL scripts for the map-match
 ADD CREATE_fn_mapmatch.sql .
 ADD CREATE_ways_spatial.sql .
