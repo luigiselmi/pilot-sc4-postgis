@@ -7,6 +7,8 @@ services:
       restart: unless-stopped
       ports:
         - "5432:5432"
+      environment:
+        - POSTGRES_PASSWORD="password"
       networks:
         - pilot-sc4-net
         
@@ -16,6 +18,8 @@ services:
      restart: unless-stopped
      ports:
        - "6311:6311"
+     environment:
+        - POSTGRES_PASSWORD="password"
      depends_on:
        - postgis-service
      networks:
