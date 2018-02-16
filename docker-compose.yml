@@ -1,15 +1,27 @@
 version: '2.1'
 
 services:
-    map-match-service:
+    postgis-service:
       image: bde2020/pilot-sc4-postgis:v0.1.0       
-      container_name: map-match
+      container_name: postgres
       restart: unless-stopped
       ports:
-        - "6311:6311"
+        - "5432:5432"
       networks:
         - pilot-sc4-net
- 
+        
+    map-match-service:
+     image: bde2020/pilot-sc4-rserve:v0.1.0
+     container_name: map-match
+     restart: unless-stopped
+     ports:
+       - "6311:6311"
+     depends_on:
+       - postgis-service
+     networks:
+       - pilot-sc4-net
+    
+
 networks:
     pilot-sc4-net:
         external: true
