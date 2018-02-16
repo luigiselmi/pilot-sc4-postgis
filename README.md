@@ -1,17 +1,18 @@
 Pilot SC4 Map-Matching
 =====================
-The Dockerfile builds a Docker image with PostGis and R. It contains also the R scripts with the definition of the functions for the 
-map matching. The map matching algorithm is used to match the location of a vehicle given as a (longitude, latitude) pair
- to a street. The road network data, extracted from OpenStreetMap, is also added to the image. The area covered is the 
-city of Thessaloniki. The map matching is based on some SQL scripts and on a R script. The scripts are provided by 
-[CERTH-HIT](http://www.imet.gr/). This image contains Rserve that allows the use of R scripts from Java through a TCP/IP connection.
+This repository provides the components to set up the map-matching service. It is based on PostGis and on Rserve. Both are
+provided as docker images. Rserve allows the communication between a Java application and R, the statistical framework. It
+includes some Rscripts that implement functions that are called remotely by the Java application. The R scripts send request 
+to the PostGis container that computes the map-matching. The map matching algorithm is used to match the location of a vehicle given as a (longitude, latitude) pair
+ to a road segment. The road network data, extracted from OpenStreetMap, is added to the PostGis image. The area covered is 
+the city of Thessaloniki. The R and SQL scripts are provided by [CERTH-HIT](http://www.imet.gr/).
  
 
 ## Requirements
 
-This component requires a Docker engine installed in the host where it is run.
+This component requires Docker engine.
 
-## Build
+## PostGis
 A docker image can be built with the command
 
     $ docker build -t bde2020/pilot-sc4-postgis:v0.1.0 .
